@@ -1,5 +1,5 @@
 # FROM golang:1.6.2
-FROM golang:1.12-alpine
+FROM golang:1.12-alpine AS build-env
 
 RUN apk add git --no-cache
 
@@ -16,6 +16,6 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o work
 
 # <- Second step to build minimal image
 FROM scratch 
-# COPY --from=build-env /go/bin/hello /go/bin/hello
+COPY --from=build-env worker worker
 EXPOSE 8080
 ENTRYPOINT ["/go/worker"]
