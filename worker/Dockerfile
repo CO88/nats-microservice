@@ -5,8 +5,8 @@ RUN apk add git --no-cache
 
 WORKDIR /app
 
-COPY ./go.mod .
-COPY ./go.sum .
+COPY go.mod .
+COPY go.sum .
 
 RUN go mod download
 COPY . .
@@ -18,4 +18,4 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o work
 FROM scratch 
 # COPY --from=build-env /go/bin/hello /go/bin/hello
 EXPOSE 8080
-ENTRYPOINT ["/app/worker"]
+ENTRYPOINT ["/go/worker"]
