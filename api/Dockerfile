@@ -4,8 +4,8 @@ FROM golang:1.12-alpine
 COPY . /go
 
 RUN apk add git --no-cache
-# RUN go get github.com/nats-io/nats
-# RUN go build api-server.go
+RUN go get github.com/nats-io/nats
+RUN go build api-server.go
 
 EXPOSE 8080
 ENTRYPOINT ["/go/api-server"]
