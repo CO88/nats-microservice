@@ -4,7 +4,17 @@ FROM golang:1.12-alpine
 COPY . /go
 
 RUN apk add git --no-cache
-RUN go get github.com/nats-io/nats
+
+
+WORKDIR /app
+
+#
+COPY go.mod go.sum ./
+
+# 
+RUN go mod download
+
+# RUN go get github.com/nats-io/nats
 RUN go build worker.go
 
 EXPOSE 8080
