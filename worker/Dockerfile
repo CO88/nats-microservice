@@ -5,14 +5,17 @@ RUN apk add git --no-cache
 
 WORKDIR /app
 
-#
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
 COPY . .
 
-# 
-RUN go mod download
-
 # RUN go get github.com/nats-io/nats
-RUN go build worker.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o worker.go
 
+# <- Second step to build minimal image
+FROM scratch 
+# COPY --from=build-env /go/bin/hello /go/bin/hello
 EXPOSE 8080
-ENTRYPOINT ["/go/worker"]
+ENTRYPOINT ["/app/worker"]
