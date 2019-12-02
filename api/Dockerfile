@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/
 
 # <- Second step to build minimal image
 FROM scratch 
-COPY --from=build-env /go/bin/api-server /go/bin/api-server
+COPY --from=build-env /go/bin/api-server /go/api-server
 EXPOSE 8080
 ENTRYPOINT ["/go/api-server"]
 

@@ -16,6 +16,6 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/
 
 # <- Second step to build minimal image
 FROM scratch 
-COPY --from=build-env /go/bin/worker /go/bin/worker
+COPY --from=build-env /go/bin/worker /go/worker
 EXPOSE 8080
 ENTRYPOINT ["/go/worker"]
