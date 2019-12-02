@@ -11,7 +11,7 @@ services:
     hostname: nats-server
   api:
     build:
-      context: "./"
+      context: "./api"
     entrypoint: /go/api-server
     links:
       - nats
@@ -23,7 +23,7 @@ services:
       - "8080:8080"
   worker:
     build:
-      context: "./"
+      context: "./worker"
     entrypoint: /go/worker
     links:
       - nats
