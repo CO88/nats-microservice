@@ -12,10 +12,10 @@ RUN go mod download
 COPY . .
 
 # RUN go get github.com/nats-io/nats
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o worker
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/worker
 
 # <- Second step to build minimal image
 FROM scratch 
-COPY --from=build-env worker worker
+COPY --from=build-env /go/bin/worker /go/bin/worker
 EXPOSE 8080
 ENTRYPOINT ["/go/worker"]

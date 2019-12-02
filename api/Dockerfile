@@ -13,11 +13,11 @@ RUN go mod download
 COPY . .
 
 # RUN go get github.com/nats-io/nats
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o api-server
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/api-server
 
 # <- Second step to build minimal image
 FROM scratch 
-COPY --from=build-env api-server api-server
+COPY --from=build-env /go/bin/api-server /go/bin/api-server
 EXPOSE 8080
 ENTRYPOINT ["/go/api-server"]
 
