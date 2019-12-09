@@ -27,7 +27,7 @@ func (s server) createTask(w http.ResponseWriter, r *http.Request) {
 
 	duration := time.Since(requestAt)
 
-	fmt.Fprintln(w, "Task scheduled in %+v\nResponse: %v\n", duration, string(response.Data))
+	fmt.Fprintf(w, "Task scheduled in %+v \nResponse: %v\n", duration, string(response.Data))
 }
 
 func (s server) healthz(w http.ResponseWriter, r *http.Request) {
